@@ -29,7 +29,7 @@ Displays results from a LLM.  By default this script looks for oogabooga on loca
 
 
 
-![screenshot](https://github.com/noarche/dorkGen/blob/main/screenshot.png?raw=true)
+![screenshot](https://github.com/noarche/Multi-API-tool/blob/main/parts/screen2.gif?raw=true)
 
 
 ## Support
