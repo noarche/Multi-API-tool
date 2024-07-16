@@ -40,9 +40,12 @@ def get_domain_info(domain_name):
             domain = item.get('domain')
             if domain:
                 domain_list.append(domain)
-        result = "\n".join(domain_list)
+        if not domain_list:
+            result = "No results found"
+        else:
+            result = "\n".join(domain_list)
     except json.decoder.JSONDecodeError:
-        result = response.text
+        result = "No results found"
     display_result(result)
 
 def get_lyrics(artist, song):
@@ -103,7 +106,7 @@ layout = [
     [sg.Button('Reverse ZipCode Lookup', size=(19, 1), key='-REVERSE_ZIP-')],
     [sg.Button('Domain Name Check', size=(19, 1), key='-DOMAIN_CHECK-')],
     [sg.Button('Lyrics Lookup', size=(19, 1), key='-LYRICS_LOOKUP-')],
-    [sg.Button('Query OogaBooga API', size=(19, 1), key='-QUERY_OOGA-')],
+    [sg.Button('Query LLM', size=(19, 1), key='-QUERY_OOGA-')],
     [sg.Button('Help', size=(19, 1), key='-HELP-')],
     [sg.Multiline(size=(80, 30), key='-TEXTBOX-', autoscroll=True, disabled=True, enable_events=True)],
     [sg.InputText('', size=(80, 1), key='-USER_INPUT-')]
@@ -134,6 +137,7 @@ while True:
         user_message = values['-USER_INPUT-']
         if user_message:
             query_oogabooga_api(user_message)
+            window['-USER_INPUT-'].update('')  # Clear the input box after querying the API
     elif event == '-HELP-':
         help_info = """
 
@@ -157,6 +161,9 @@ while True:
 
         Lyrics Lookup:
         Displays complete lyrics to an artist+song.
+        
+        Query LLM:
+        Ask LLM using oogabooga api. Uses localhost by default. 
         
          More APIs will be added in the future.
          For Updates & Information visit
